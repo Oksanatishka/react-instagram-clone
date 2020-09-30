@@ -1,0 +1,99 @@
+Building a Instagram Clone App 💻
+👉 Deploying a React app with Firebase Hosting 🌐
+👉 How to handle authentication with Firebase 🔑
+👉 How to upload images to Firebase Storage and use them on your site! 🖥️
+👉 Real-time database with Firebase’s Firestore 🔥
+
+🌟 STEPS 🌟
+- Start REACT project (npx)
+- Create app on Firebase
+- Start react app locally
+- Clean up REACT app
+- Create input field
+- Add firebase hosting to app
+- Add ability to send message
+- Question: Why use state instead of a normal variable?
+- Use Material-UI
+- CSS Styling
+- Add Image, Username, and Caption to Instagram Post
+- Render out multiple Posts
+- Is React better than Node.JS for back-end?
+- How to implement Firebase Database
+- Access Database, Authentication, and Storage from Firebase
+- How to use useEffect to Push and Pull data from Database
+        Firebase -> Cloud Firestore -> Create database -> Start a collection -> collection id: posts -> Fields: caption, username, imageUrl.
+        Connect Firebase and app: create config file called firebase.js.
+        > npm i firebase
+        In App.js add useEffect -> remove test objects in useState([]) -> now data will be pulled from db!
+- Firebase User Authentication
+        Firebase -> Authentication -> Sign-in method: Email/Password, Enable
+        Material UI -> Modal https://material-ui.com/ru/components/modal/#modal -> find 'Simple modal' <> icon -> copy code into App.js
+
+        const [open, setOpen] = useState(false);
+        const [openSignIn, setOpenSignIn] = useState(false);
+    
+        const [username, setUsername] = useState('');
+        const [email, setEmail] = useState('');
+        const [password, setPassword] = useState('');
+        const [user, setUser] = useState(null);
+        
+        useEffect(() => {
+            const unsubscribe = auth.onAuthStateChanged((authUser) => {
+                if (authUser) {
+                    console.log(authUser);
+                    setUser(authUser);
+                } else {
+                    setUser(null);
+                }
+            });
+            return () => {
+                unsubscribe();
+            };
+        }, [user, username]);
+        
+        const signUp = (e) => {
+            e.preventDefault();
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((authUser) => {
+                    return authUser.user.updateProfile({
+                        displayName: username,
+                    });
+                })
+                .catch((error) => alert(error.message));
+            setOpen(false);
+        };
+    
+        const signIn = (e) => {
+            e.preventDefault();
+            auth.signInWithEmailAndPassword(email, password).catch((error) => alert(error.message));
+            setOpenSignIn(false);
+        };
+
+        <Button type="submit" onClick={signUp}>Sign Up</Button>
+        <Button type="submit" onClick={signIn}>Sign In</Button>
+
+        <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+        <Button onClick={() => setOpen(true)}>Sign Up</Button>
+
+- Storing IG posts & images in Firebase
+        The logic is in ImageUpload.js
+- Styling Image Uploader
+- Styling the Instagram Clone App
+- Add Comments to Instagram Posts
+- Final Step: Deploying our Instagram App to Firebase
+
+ScreenBrush - app for annotation, it allows you to annotate on your own screen.
+ColorZilla (Chrome extension)
+Material UI: Avatar
+Firebase: 3 lines of code to set a REAL-TIME 2-way sync with your database. Simplicity is king!
+react-instagram-embed https://www.npmjs.com/package/react-instagram-embed
+    > npm i react-instagram-embed
+
+Q: Is React better than Node.JS for back-end?
+A: Firebase: they try to get rid of all the complexity of a traditional back-end so you don't have to make the API request and you're gonna see when we actually start implementing the database next but 
+    if you do need a back-end so no js' is basically for those of you who don't know it's server-side JavaScript so it's just the stuff that's on the server in the background so whenever you solve using the Instagram website or something and you click something in most cases it makes your requests like on some kind of database server somewhere and that's usually running either like Python or nodejs or something like that but here what we're gonna do is 
+    firebase actually strips that away from us so we don't even need to do that and I'll show you that in a sec but well if you do need to do that guys firebase offers something called 'cloud functions' and cloud functions can be written in nodejs so it tells your question it's more it's not really a case of which one's better it's it's more of a case of firebase allows you to have no js' cloud functions which can scale up or down depending on how many people are using them at one time so it's really really powerful 
+    firebase gives you a real time database
+    so firebase has something called the 'firestore database' and that is a real time database so traditionally if you have a database in in any app you kind of have to constantly sort of fetch every five seconds or ten seconds and that's quite intense and you don't really get like a real-time feel it just feels like this janky experience whereas in firebase they do all of the stuff so some of you may have used something called socket dial which is basically like sets up like these real-time listeners but in firebase you don't even have to do that they do everything for you behind the scenes all you have to do is like literally I think it's like three lines of code and it pretty much sets up this real time sink so that way if somebody adds something information into the database it immediately comes through them the way we combine that with react is really really beautiful and it gives you a really elegant solution to all of that headache so you never have to worry about that real time sink anymore 
+
+
